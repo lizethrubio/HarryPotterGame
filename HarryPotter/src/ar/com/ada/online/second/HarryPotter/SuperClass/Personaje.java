@@ -9,6 +9,8 @@ public class Personaje {
     private String Hechizo;
     private Integer tipoPersonaje; //1. Mago 2.Elfo
 
+    public Personaje(){};
+
     public Personaje(String name, String ubicacion, Integer vida, Integer energiaMagica, String hechizo) {
         this.name = name;
         this.ubicacion = ubicacion;

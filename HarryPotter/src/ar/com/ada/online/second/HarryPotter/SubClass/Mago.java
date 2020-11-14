@@ -1,16 +1,27 @@
 package ar.com.ada.online.second.HarryPotter.SubClass;
 
 import ar.com.ada.online.second.HarryPotter.SuperClass.Personaje;
+import ar.com.ada.online.second.HarryPotter.Varita;
 
 public class Mago extends Personaje {
 
     private String tipoDeMago;
-    private String varita;
+    private Varita varita;
 
-    public Mago(String name, String ubicacion, Integer vida, Integer energiaMagica, String hechizo, String tipoDeMago, String varita) {
+    //    public Mago(String name, String ubicacion, Integer vida, Integer energiaMagica, String hechizo, String tipoDeMago, String varita) {
+//        super(name, ubicacion, vida, energiaMagica, hechizo);
+//        this.tipoDeMago = tipoDeMago;
+//        this.varita = varita;
+//    }
+
+    public Mago(String name, String ubicacion, Integer vida, Integer energiaMagica, String hechizo, String tipoDeMago, Varita varita) {
         super(name, ubicacion, vida, energiaMagica, hechizo);
         this.tipoDeMago = tipoDeMago;
         this.varita = varita;
+    }
+
+    public Mago() {
+        super();
     }
 
     public String getTipoDeMago() {
@@ -21,11 +32,11 @@ public class Mago extends Personaje {
         this.tipoDeMago = tipoDeMago;
     }
 
-    public String getVarita() {
+    public Varita getVarita() {
         return varita;
     }
 
-    public void setVarita(String varita) {
+    public void setVarita(Varita varita) {
         this.varita = varita;
     }
 }
