@@ -6,7 +6,7 @@ import ar.com.ada.online.second.HarryPotter.SuperClass.Personaje;
 public class HechizoAtaque extends Hechizos {
     int dano; //Dano del Hechizo
     int danoTotal; //Dano + extras
-    String ubicacionAtaque; //A, B o C
+    Integer ubicacionAtaque; //A, B o C
     Boolean magoBlanco; //true Blanco (xx ptos) false Oscuro (+10 ptos)
     Boolean elfoLibre; //true (+5 ptos) false(xx ptos)
     int danoVarita; //ptos de dano varita
@@ -56,11 +56,11 @@ public class HechizoAtaque extends Hechizos {
         return danoTotal;
     }
 
-    public String getUbicacionAtaque() {
+    public Integer getUbicacionAtaque() {
         return ubicacionAtaque;
     }
 
-    public void setUbicacionAtaque(String ubicacionAtaque) {
+    public void setUbicacionAtaque(Integer ubicacionAtaque) {
         this.ubicacionAtaque = ubicacionAtaque;
     }
 

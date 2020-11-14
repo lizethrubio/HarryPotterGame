@@ -10,7 +10,7 @@ public class Elfo extends Personaje {
         super();
     }
 
-    public Elfo(String name, String ubicacion, Integer vida, Integer energiaMagica, String hechizo, String tipoDeElfo) {
+    public Elfo(String name, Integer ubicacion, Integer vida, Integer energiaMagica, String hechizo, String tipoDeElfo) {
         super(name, ubicacion, vida, energiaMagica, hechizo);
         this.tipoDeElfo = tipoDeElfo;
     }

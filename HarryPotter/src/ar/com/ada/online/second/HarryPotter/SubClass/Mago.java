@@ -14,7 +14,7 @@ public class Mago extends Personaje {
 //        this.varita = varita;
 //    }
 
-    public Mago(String name, String ubicacion, Integer vida, Integer energiaMagica, String hechizo, String tipoDeMago, Varita varita) {
+    public Mago(String name, Integer ubicacion, Integer vida, Integer energiaMagica, String hechizo, String tipoDeMago, Varita varita) {
         super(name, ubicacion, vida, energiaMagica, hechizo);
         this.tipoDeMago = tipoDeMago;
         this.varita = varita;
@@ -32,8 +32,8 @@ public class Mago extends Personaje {
         this.tipoDeMago = tipoDeMago;
     }
 
-    public Varita getVarita() {
-        return varita;
+    public String getVarita() {
+        return varita.getName();
     }
 
     public void setVarita(Varita varita) {

@@ -3,7 +3,7 @@ package ar.com.ada.online.second.HarryPotter.SuperClass;
 public class Personaje {
 
     private String name;
-    private String ubicacion;
+    private Integer ubicacion; //1. A - 2. B - 3. C
     private Integer vida;
     private Integer energiaMagica;
     private String Hechizo;
@@ -11,7 +11,7 @@ public class Personaje {
 
     public Personaje(){};
 
-    public Personaje(String name, String ubicacion, Integer vida, Integer energiaMagica, String hechizo) {
+    public Personaje(String name, Integer ubicacion, Integer vida, Integer energiaMagica, String hechizo) {
         this.name = name;
         this.ubicacion = ubicacion;
         this.vida = vida;
@@ -27,11 +27,11 @@ public class Personaje {
         this.name = name;
     }
 
-    public String getUbicacion() {
+    public Integer getUbicacion() {
         return ubicacion;
     }
 
-    public void setUbicacion(String ubicacion) {
+    public void setUbicacion(int ubicacion) {
         this.ubicacion = ubicacion;
     }
 
