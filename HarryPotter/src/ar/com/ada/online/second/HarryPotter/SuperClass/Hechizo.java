@@ -1,6 +1,6 @@
 package ar.com.ada.online.second.HarryPotter.SuperClass;
 
-public class Hechizos {
+public class Hechizo {
 
     String name;
     Integer type; //1.Ataque 2.Defensa 3.Recuperacion
@@ -19,9 +19,9 @@ public class Hechizos {
         name = name1;
     };
 
-    public Hechizos(){}
+    public Hechizo(){}
 
-    public Hechizos(String name, Integer type, Integer ptosEnergiaMagica) {
+    public Hechizo(String name, Integer type, Integer ptosEnergiaMagica) {
         this.name = name;
         this.type = type;
         this.ptosEnergiaMagica = ptosEnergiaMagica;
