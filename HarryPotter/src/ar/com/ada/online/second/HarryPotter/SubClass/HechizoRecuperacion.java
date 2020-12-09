@@ -1,9 +1,9 @@
 package ar.com.ada.online.second.HarryPotter.SubClass;
 
-import ar.com.ada.online.second.HarryPotter.SuperClass.Hechizos;
+import ar.com.ada.online.second.HarryPotter.SuperClass.Hechizo;
 import ar.com.ada.online.second.HarryPotter.SuperClass.Personaje;
 
-public class HechizoRecuperacion extends Hechizos{
+public class HechizoRecuperacion extends Hechizo{
 
     Integer recuperacion; //ptos recuperacion del hechizo
     Integer recuperacionTotal; //recuperacion del hechizo + extras
@@ -11,21 +11,35 @@ public class HechizoRecuperacion extends Hechizos{
     Boolean elfoLibre; //true (+5ptos) false(0ptos)
 
 
-    public void calcularRecuparacion(Personaje personaje) {
-        int mago = 0;
-        int elfo = 0;
-        if ((magoBlanco)&& (personaje.getVida()<=35)){
-            mago =10; // check
+    public HechizoRecuperacion (String name, Integer type,  Integer ptosEnergiaMagica,Integer recuperacion) {
+        super(name, type, ptosEnergiaMagica);
+        this.recuperacion = recuperacion;
+    }
+
+    public Integer calcularRecuparacion(Personaje personaje) {
+        recuperacionTotal = recuperacion;
+        if (personaje instanceof Mago ){
+            if (personaje.isDarkOrFree()==false & personaje.getVida()<35){
+            recuperacionTotal= recuperacionTotal +10;
         }
-        if (elfoLibre) elfo= 5; //check
-        recuperacionTotal = recuperacion + mago + elfo;
-        recuperarPersonaje(personaje);
+        }else if (personaje.isDarkOrFree()){
+            recuperacionTotal = recuperacionTotal + 5;
+        }
+
+        return recuperacionTotal;
+
     }
 
 
-    public void recuperarPersonaje(Personaje personaje) {
+    public Personaje recuperarPersonaje(Personaje personaje) {
+        recuperacionTotal = calcularRecuparacion(personaje);
         int inicial = personaje.getEnergiaMagica();
-        personaje.setEnergiaMagica( inicial + recuperacionTotal);
+        if (inicial + recuperacionTotal < 100) {
+            personaje.setEnergiaMagica(inicial + recuperacionTotal);
+        } else{
+            personaje.setEnergiaMagica(100);
+        }
+        return personaje;
     }
 
     public Integer getRecuperacion() {

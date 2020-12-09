@@ -1,9 +1,9 @@
 package ar.com.ada.online.second.HarryPotter.SubClass;
 
-import ar.com.ada.online.second.HarryPotter.SuperClass.Hechizos;
+import ar.com.ada.online.second.HarryPotter.SuperClass.Hechizo;
 import ar.com.ada.online.second.HarryPotter.SuperClass.Personaje;
 
-public class HechizoAtaque extends Hechizos {
+public class HechizoAtaque extends Hechizo {
     int dano; //Dano del Hechizo
     int danoTotal; //Dano + extras
     Integer ubicacionAtaque; //A, B o C
@@ -11,25 +11,33 @@ public class HechizoAtaque extends Hechizos {
     Boolean elfoLibre; //true (+5 ptos) false(xx ptos)
     int danoVarita; //ptos de dano varita
 
-
-    public void calcularDano(Personaje personajeAtacar) {
-        int mago = 0;
-        int elfo = 0;
-        if (magoBlanco==false) mago= 10; //check
-        if (elfoLibre) elfo= 5; //check
-
-        if (personajeAtacar.getUbicacion()==ubicacionAtaque){
-            danoTotal = dano + mago + elfo + danoVarita;
-            danarPersonaje(personajeAtacar);
-        }else{
-            danoTotal = 0;
-            danarPersonaje(personajeAtacar);
+        public HechizoAtaque (String name, Integer type,  Integer ptosEnergiaMagica,Integer dano) {
+            super(name, type, ptosEnergiaMagica);
+            this.dano = dano;
         }
+
+
+    public Integer calcularDano(Personaje personaje) {
+        danoTotal = dano;
+
+        if (personaje instanceof Mago){
+            danoTotal =danoTotal + ((Mago) personaje).getVarita().getPtosDano();
+            if (personaje.isDarkOrFree()){
+                danoTotal= danoTotal +10;
+            }
+        } else if (personaje.isDarkOrFree()){
+            danoTotal = danoTotal+5;
+        }
+
+        return danoTotal;
     }
 
-    public void danarPersonaje(Personaje personaje){
-        int inicial = personaje.getVida();
-        personaje.setVida( inicial + danoTotal);
+    public Personaje danarPersonaje(Personaje personaje, Personaje personajeAtacar){
+            danoTotal = calcularDano(personaje);
+        int inicial = personajeAtacar.getVida();
+        personajeAtacar.setVida( inicial - danoTotal);
+
+        return personajeAtacar;
     }
 
     public int getDanoVarita() {

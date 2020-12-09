@@ -1,26 +1,39 @@
 package ar.com.ada.online.second.HarryPotter.SubClass;
 
-import ar.com.ada.online.second.HarryPotter.SuperClass.Hechizos;
+import ar.com.ada.online.second.HarryPotter.SuperClass.Hechizo;
 import ar.com.ada.online.second.HarryPotter.SuperClass.Personaje;
 
-public class HechizoDefensa extends Hechizos {
+public class HechizoDefensa extends Hechizo {
 
     int sanacion; //max 20
     int sanacionTotal; //
-    Boolean magoBlanco; //true Blanco (xx ptos) false Oscuro (xx ptos)
-    Boolean elfoLibre; //true (+5ptos) false(+10 ptos)
 
-    public void calcularSanacion(Personaje personaje){
-        int mago = 0;
-        int elfo = 0;
-        if (magoBlanco) mago = 0; //Check
-        if (elfoLibre) elfo = 5; else elfo =10; //Check
-        sanacionTotal  = sanacion + mago +elfo;
-        sanarPersonaje(personaje);
+
+    public HechizoDefensa (String name, Integer type,  Integer ptosEnergiaMagica,Integer sanacion) {
+        super(name, type, ptosEnergiaMagica);
+        this.sanacion = sanacion;
+    }
+    public int calcularSanacion(Personaje personaje){
+        sanacionTotal =sanacion;
+        if (personaje instanceof Elfo ){
+            if (personaje.isDarkOrFree()) {
+                sanacionTotal= sanacionTotal+ 5;
+            }else   {
+                sanacionTotal = sanacionTotal +10;}
+        }else if (personaje instanceof Mago && personaje.isDarkOrFree()){
+            sanacionTotal = sanacionTotal -10;
+        }
+        return sanacionTotal;
     }
 
-    public void sanarPersonaje(Personaje personaje){
+    public Personaje sanarPersonaje(Personaje personaje){
+        sanacionTotal = calcularSanacion(personaje);
        int vidaInicial = personaje.getVida();
-       personaje.setVida(vidaInicial+sanacionTotal);
+       if ((vidaInicial+ sanacionTotal) < 100){
+           personaje.setVida(vidaInicial+sanacionTotal);
+        }else personaje.setVida(100);
+
+
+    return personaje;
     }
 }

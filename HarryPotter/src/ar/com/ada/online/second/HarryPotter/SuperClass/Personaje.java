@@ -1,22 +1,27 @@
 package ar.com.ada.online.second.HarryPotter.SuperClass;
 
+import ar.com.ada.online.second.HarryPotter.SubClass.HechizoAtaque;
+
+import java.util.ArrayList;
+
 public class Personaje {
 
     private String name;
-    private Integer ubicacion; //1. A - 2. B - 3. C
+    private Integer Location; //1. A - 2. B - 3. C
     private Integer vida;
     private Integer energiaMagica;
-    private String Hechizo;
+    public ArrayList<Hechizo> hechizo; // esto es una lista, no un string (camelCase recuerda)
     private Integer tipoPersonaje; //1. Mago 2.Elfo
+    private Boolean dark; //1. Dark Wizard or Free Elf 0. No.
 
     public Personaje(){};
 
-    public Personaje(String name, Integer ubicacion, Integer vida, Integer energiaMagica, String hechizo) {
+    public Personaje(String name, Integer Location, Integer vida, Integer energiaMagica, ArrayList hechizo) {
         this.name = name;
-        this.ubicacion = ubicacion;
+        this.Location = Location;
         this.vida = vida;
         this.energiaMagica = energiaMagica;
-        Hechizo = hechizo;
+        hechizo = hechizo;
     }
 
     public String getName() {
@@ -27,12 +32,12 @@ public class Personaje {
         this.name = name;
     }
 
-    public Integer getUbicacion() {
-        return ubicacion;
+    public Integer getLocation() {
+        return Location;
     }
 
-    public void setUbicacion(int ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setLocation(int ubicacion) {
+        this.Location = ubicacion;
     }
 
     public Integer getVida() {
@@ -51,12 +56,20 @@ public class Personaje {
         this.energiaMagica = energiaMagica;
     }
 
-    public String getHechizo() {
-        return Hechizo;
+    public ArrayList getHechizo() {
+        return hechizo;
     }
 
-    public void setHechizo(String hechizo) {
-        Hechizo = hechizo;
+    public void setHechizo(ArrayList hechizo) {
+        this.hechizo = hechizo;
+    }
+
+    public void setDark() {
+        this.dark = isDarkOrFree();
+    }
+
+    public Boolean getDark() {
+        return dark;
     }
 
     public void atacar() {
@@ -72,8 +85,9 @@ public class Personaje {
     }
 
     public boolean estaVivo() {
-
-        return true;
+        if (vida<=0){
+            return false;
+        }else return true;
     }
 
     public void agregarHechizo() {
@@ -85,5 +99,14 @@ public class Personaje {
 
 
         return null;
+    }
+
+    public Boolean isDarkOrFree() {
+        Integer count = 0;
+        for (Hechizo hechizo: hechizo) {
+            if (hechizo instanceof HechizoAtaque) count++;
+        }
+
+        return count > 3;
     }
 }
