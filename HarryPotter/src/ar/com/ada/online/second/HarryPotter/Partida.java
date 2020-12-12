@@ -40,9 +40,9 @@ public class Partida {
         player1.setDark();
         if (player1.isDarkOrFree()) {
             if (player1 instanceof Mago)
-                System.out.println("You are Dark Wizard!!");
+                System.out.println("You are a Dark Wizard!!");
             else
-                System.out.println("You are free Elf!!");
+                System.out.println("You are a Free Elf!!");
         }
         player1.setEnergiaMagica(100);
         player1.setVida(100);
@@ -56,10 +56,16 @@ public class Partida {
         player2.setDark();
         if (player2.isDarkOrFree()) {
             if (player2 instanceof Mago)
-                System.out.println("You are a Dark Wizard!!");
+                System.out.println("\nYou are a Dark Wizard!!");
             else
-                System.out.println("You are free Elf!!");
+                System.out.println("\nYou are a free Elf!!");
+        }else{
+            if (player2 instanceof Mago)
+                System.out.println("\nYou are a white Wizard!!");
+            else
+                System.out.println("\nYou are a captive Elf!!");
         }
+
         player2.setEnergiaMagica(100);
         player2.setVida(100);
         System.out.println("You are ready player!! \n\n\n");
@@ -157,26 +163,26 @@ public class Partida {
                 " \t Puntos de dano: 8");
         System.out.println("4. Tejo Wand: " + "fabricada 1938, mide 34.25 cm de largo." +
                 " \t Puntos de dano: 9");
-        System.out.println("\n\n --- Please, wait a moment, your wand is being choseen  --- ");
+        System.out.println("\n--- Please, wait a moment, your wand is being choseen  --- ");
 
         Random random = new Random();
         int varitaNum = random.nextInt(4);
         switch (varitaNum) {
             case 1:
                 Varita vid = new Varita("Varita de Vid", 10, false);
-                System.out.println("\n\n\n     Your Wand is: Vid    \n\n\n ");
+                System.out.println("\n    Your Wand is: Vid    \n\n\n ");
                 return vid;
             case 2:
                 Varita sauco = new Varita("Varita de Sauco", 12, false);
-                System.out.println("\n\n\n     Your Wand is: Sauco    \n\n\n ");
+                System.out.println("\n     Your Wand is: Sauco    \n\n\n ");
                 return sauco;
             case 3:
                 Varita espino = new Varita("Varita de Espino", 8, false);
-                System.out.println("\n\n\n     Your Wand is: Espino  \n\n\n ");
+                System.out.println("\n     Your Wand is: Espino  \n\n\n ");
                 return espino;
             default:
                 Varita tejo = new Varita("Varita de Tejo", 9, false);
-                System.out.println("\n\n\n    Your Wand is: Tejo   \n\n\n ");
+                System.out.println("\n    Your Wand is: Tejo   \n\n\n ");
                 return tejo;
         }
 
@@ -185,7 +191,7 @@ public class Partida {
 
 
     public Integer selectLocation(Scanner keyboard) {
-        System.out.println("\t Introduzca su ubicacion inicial: " +
+        System.out.println("\t Select the location you want: " +
                 "\t \n 1. A " +
                 "\t \n 2. B " +
                 "\t \n 3. C ");
@@ -194,13 +200,13 @@ public class Partida {
 
         switch (location) {
             case 1:
-                System.out.println("\t\n Your initial location is: A");
+                System.out.println("\t\n Your location is: A");
                 return location;
             case 2:
-                System.out.println("\t\n Your initial location is: B");
+                System.out.println("\t\n Your location is: B");
                 return location;
             case 3:
-                System.out.println("\t\n Your initial location is: C");
+                System.out.println("\t\n Your location is: C");
                 return location;
             default:
                 System.out.println("No valid location. \nThe location A will be assigned\n\n");
@@ -389,87 +395,120 @@ public class Partida {
         }
     }
 
-    public void thePlaysBegin(Scanner keyboard){
-        while (player1.estaVivo() && player2.estaVivo()){
-            System.out.println("Player 1. Its your turn");
-            System.out.println("Introduce the number of spell you want to use: ");
-            for (int i=0; i<6; i++) {
-                System.out.println((i+1) + ". "+ player1.hechizo.get(i).getName());
+    public void thePlaysBegin(Scanner keyboard) {
+        while (player1.estaVivo() && player2.estaVivo()) {
+            System.out.println("\n\nPlayer 1. Its your turn" +
+                    "\n Actual Status:  \n\t - Magic Energy: " + player1.getEnergiaMagica() +
+                    "\n\t - Life: " + player1.getVida());
+            System.out.println("\nIntroduce the number of spell you want to use: ");
+            System.out.println("Spell Name  -\t Magic Energy Required");
+            for (int i = 0; i < player1.hechizo.size(); i++) {
+                System.out.println((i + 1) + ". " + player1.hechizo.get(i).getName() +" - " + player1.hechizo.get(i).getPtosEnergiaMagica());
             }
             int num = keyboard.nextInt();
-            Hechizo  hech = player1.hechizo.get(num -1);
-            switch (hech.getClass().getSimpleName()){
+            Hechizo hech = player1.hechizo.get(num - 1);
+            switch (hech.getClass().getSimpleName()) {
                 case "HechizoAtaque":
-                    if (player1.getEnergiaMagica()>  hech.getPtosEnergiaMagica()){
-                    System.out.println("What location do you want to attack?: \t\n1.A \t\n 2.B \t\n 3.C");
-                    int loc = keyboard.nextInt();
-                    if (player2.getLocation() == loc){
-                       player2 = ((HechizoAtaque) hech).danarPersonaje(player1, player2);
-                    }}
-                    else {
-                        System.out.println("You do not have enough magic energy for the spell");
-                        player1.setEnergiaMagica(player1.getEnergiaMagica()+10);
-                    }
-                case "HechizoDefensa":
-                    if (player1.getEnergiaMagica()>  hech.getPtosEnergiaMagica()) {
-                        player1 = ((HechizoDefensa) hech).sanarPersonaje(player1);
-                    }else {
-                        System.out.println("You do not have enough magic energy for the spell");
-                        player1.setEnergiaMagica(player1.getEnergiaMagica()+10);
-                    }
-                case "HechizoRecuperacion":
-                    if (player1.getEnergiaMagica()>  hech.getPtosEnergiaMagica()) {
-                        player1 = ((HechizoRecuperacion) hech).recuperarPersonaje(player1);
-                    }else{
-                        System.out.println("You do not have enough magic energy for the spell");
-                        player1.setEnergiaMagica(player1.getEnergiaMagica()+10);
-                    }
-            }
-
-
-            System.out.println("Player 2. Its your turn");
-            System.out.println("Introduce the number of spell you want to use: ");
-            for (int i=0; i<6; i++) {
-                System.out.println((i+1) + ". "+ player2.hechizo.get(i).getName());
-            }
-            int num2 = keyboard.nextInt();
-            Hechizo  hech2 = player2.hechizo.get(num -1);
-            switch (hech2.getClass().getSimpleName()){
-                case "HechizoAtaque":
-                    if (player2.getEnergiaMagica()>  hech2.getPtosEnergiaMagica()){
+                    if (player1.getEnergiaMagica() > hech.getPtosEnergiaMagica()) {
                         System.out.println("What location do you want to attack?: \t\n 1.A \t\n 2.B \t\n 3.C");
                         int loc = keyboard.nextInt();
-                        if (player1.getLocation() == loc){
-                            player1 = ((HechizoAtaque) hech2).danarPersonaje(player2, player1);
-                        }}
-                    else {
+                        if (player2.getLocation() == loc) {
+                            int a = player2.getVida();
+                            player2 = ((HechizoAtaque) hech).danarPersonaje(player1, player2);
+                            int b = player2.getVida();
+                            System.out.println("\n You have attacked player 2! \n The impact is: " + (a-b) + " damage points");
+                        }
+                        player1.setEnergiaMagica(player1.getEnergiaMagica()-hech.getPtosEnergiaMagica());
+                        System.out.println("Your new Magic Energic level is "+ player1.getEnergiaMagica());
+                    } else {
                         System.out.println("You do not have enough magic energy for the spell");
-                        player2.setEnergiaMagica(player2.getEnergiaMagica()+10);
+                        player1.setEnergiaMagica(player1.getEnergiaMagica() + 10);
                     }
+                    break;
                 case "HechizoDefensa":
-                    if (player2.getEnergiaMagica()>  hech2.getPtosEnergiaMagica()) {
-                        player2 = ((HechizoDefensa) hech2).sanarPersonaje(player2);
-                    }else {
+                    if (player1.getEnergiaMagica() > hech.getPtosEnergiaMagica()) {
+                        player1 = ((HechizoDefensa) hech).sanarPersonaje(player1);
+                        player1.setEnergiaMagica(player1.getEnergiaMagica()-hech.getPtosEnergiaMagica());
+                        System.out.println("Your new life level is: " + player1.getVida());
+                    } else {
                         System.out.println("You do not have enough magic energy for the spell");
-                        player2.setEnergiaMagica(player2.getEnergiaMagica()+10);
+                        player1.setEnergiaMagica(player1.getEnergiaMagica() + 10);
                     }
+                    break;
                 case "HechizoRecuperacion":
-                    if (player2.getEnergiaMagica()>  hech2.getPtosEnergiaMagica()) {
-                        player2 = ((HechizoRecuperacion) hech2).recuperarPersonaje(player2);
-                    }else{
+                    if (player1.getEnergiaMagica() > hech.getPtosEnergiaMagica()) {
+                        player1 = ((HechizoRecuperacion) hech).recuperarPersonaje(player1);
+                        player1.setEnergiaMagica(player1.getEnergiaMagica()-hech.getPtosEnergiaMagica());
+                        System.out.println("Your new Magic energy level is: "+ player1.getEnergiaMagica());
+                    } else {
                         System.out.println("You do not have enough magic energy for the spell");
-                        player2.setEnergiaMagica(player2.getEnergiaMagica()+10);
+                        player1.setEnergiaMagica(player1.getEnergiaMagica() + 10);
                     }
+                    break;
             }
+
+            player1.setLocation(selectLocation(keyboard));
+
+
+            System.out.println("\n\n Player 2. Its your turn" +
+                    "\n\t Actual Status:  \n\t - Magic Energy: " + player2.getEnergiaMagica() +
+                    "\n\t - Life: " + player2.getVida());
+            System.out.println("\n Introduce the number of spell you want to use: ");
+            System.out.println("Spell Name  -\t Magic Energy Required");
+            for (int i = 0; i < player2.hechizo.size(); i++) {
+                System.out.println((i + 1) + ". " + player2.hechizo.get(i).getName() + " - " + player2.hechizo.get(i).getPtosEnergiaMagica());
             }
+            int num2 = keyboard.nextInt()-1;
+            Hechizo hech2 = player2.hechizo.get(num2);
+            switch (hech2.getClass().getSimpleName()) {
+                case "HechizoAtaque":
+                    if (player2.getEnergiaMagica() > hech2.getPtosEnergiaMagica()) {
+                        System.out.println("What location do you want to attack?: \t\n 1.A \t\n 2.B \t\n 3.C");
+                        int loc = keyboard.nextInt();
+                        if (player1.getLocation() == loc) {
+                            int a = player1.getVida();
+                            player1 = ((HechizoAtaque) hech2).danarPersonaje(player2, player1);
+                            int b = player1.getVida();
+                            System.out.println("\n You have attacked player 2! \n The impact is: " + (a-b) + " damage points");
+                        }
+                        player2.setEnergiaMagica(player2.getEnergiaMagica()-hech2.getPtosEnergiaMagica());
+                        System.out.println("Your new Magic Energic level is "+ player2.getEnergiaMagica());
+                    } else {
+                        System.out.println("You do not have enough magic energy for the spell");
+                        player2.setEnergiaMagica(player2.getEnergiaMagica() + 10);
+                    }
+                    break;
+                case "HechizoDefensa":
+                    if (player2.getEnergiaMagica() > hech2.getPtosEnergiaMagica()) {
+                        player2 = ((HechizoDefensa) hech2).sanarPersonaje(player2);
+                        player2.setEnergiaMagica(player2.getEnergiaMagica()-hech2.getPtosEnergiaMagica());
+                        System.out.println("Your new life level is: " + player2.getVida());
+                    } else {
+                        System.out.println("You do not have enough magic energy for the spell");
+                        player2.setEnergiaMagica(player2.getEnergiaMagica() + 10);
+                    }
+                    break;
+                case "HechizoRecuperacion":
+                    if (player2.getEnergiaMagica() > hech2.getPtosEnergiaMagica()) {
+                        player2 = ((HechizoRecuperacion) hech2).recuperarPersonaje(player2);
+                        player2.setEnergiaMagica(player2.getEnergiaMagica()-hech2.getPtosEnergiaMagica());
+                        System.out.println("Your new Magic energy level is: "+ player2.getEnergiaMagica());
+                    } else {
+                        System.out.println("You do not have enough magic energy for the spell");
+                        player2.setEnergiaMagica(player2.getEnergiaMagica() + 10);
+                    }
+                    break;
+            }
+            player2.setLocation(selectLocation(keyboard));
+        }
 
         if (player1.estaVivo()==false){
             System.out.println("\n\n Player 2 YOU ARE THE CHAMPION!!!!" +
-                    "\n\n Congratulation!");
+                    "\n\n Congratulations!");
 
         }else if(player2.estaVivo()==false){
             System.out.println("\n\n Player 1. YOU ARE THE CHAMPION!!!!" +
-                    "\n\n Congratulation!);");
+                    "\n\n Congratulations!);");
         }
 
 
